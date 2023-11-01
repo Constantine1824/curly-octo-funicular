@@ -31,9 +31,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = True
 BASE_URL = os.environ.get('RENDER_EXTERNAL_HOSTNAME', None)
 
-if BASE_URL:
-    ALLOWED_HOSTS = [BASE_URL]
 ALLOWED_HOSTS = []
+if BASE_URL:
+    ALLOWED_HOSTS.append(BASE_URL)
 
 
 # Application definition
