@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsAuthor
 from .models import models
+from .signals import rate
 
 class AllRecipeAPIView(APIView):
     def get(self, request):
@@ -13,6 +14,10 @@ class AllRecipeAPIView(APIView):
         serializer = RecipeSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class GetPopularRecipes(APIView):
+    def get(self, request):
+        pass
 
 class ViewRecipe(APIView):
     def get(self, request, id):

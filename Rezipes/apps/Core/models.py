@@ -14,6 +14,7 @@ class Recipes(BaseModelField):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    avg_rating = models.DecimalField(default=0.0, decimal_places=1, max_digits=2)
 
 
     def __str__(self):
@@ -36,7 +37,7 @@ class Comments(BaseModelField):
 
 class Ratings(BaseModelField):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipes, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipes, on_delete=models.CASCADE, related_name='ratings')
     rating = models.IntegerField()
 
 # Create your models here.

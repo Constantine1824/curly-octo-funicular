@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.conf import settings
-from base64 import urlsafe_b64encode, urlsafe_b64decode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from time import strftime
 from datetime import datetime
@@ -8,18 +8,18 @@ from datetime import datetime
 
 class UrlSign:
     def urlsafe_encode(self,value:str):
-        value_bytes = force_bytes(value)
-        return urlsafe_b64encode(value_bytes).decode('utf-8', errors='strict')
+        value_bytes = force_bytes(value, encoding='utf-8')
+        return urlsafe_base64_encode(value_bytes).decode('utf-8', errors='ignore')
     
     def urlsafe_decode(self,value:bytes):
-        decoded_bytes = urlsafe_b64decode(value)
+        decoded_bytes = urlsafe_base64_decode(value)
         return force_str(decoded_bytes)
     
     def time_to_str(self,value:datetime):
         return value.strftime('%Y-%m-%d %H:%M:%S')
     
     def str_to_time(self,value:str):
-        return datetime.strptime('%Y-%m-%d %H:%M:%S')
+        return datetime.strptime(value,'%Y-%m-%d %H:%M:%S')
     
     def url_encode(self, username):
         current_time = datetime.now()
