@@ -17,7 +17,12 @@ class AllRecipeAPIView(APIView):
 
 class GetPopularRecipes(APIView):
     def get(self, request):
-        pass
+        queryset = Recipes.objects.all().order_by('avg_rating') [:5]
+        serializer = RecipeSerializer(queryset, many=True)
+        return Response({
+            "status":"Success",
+            "data" : serializer.data
+        }, status=status.HTTP_200_OK)
 
 class ViewRecipe(APIView):
     def get(self, request, id):
