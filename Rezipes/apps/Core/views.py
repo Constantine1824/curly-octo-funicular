@@ -4,7 +4,7 @@ from .serializers import RecipeCreateSerializer,RecipeSerializer, RatingSerializ
 from .models import Recipes, Ratings
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsAuthor
+from .permissions import IsAuthor, IsRater
 from .models import models
 from .signals import rate
 
@@ -99,7 +99,7 @@ class RateAPIView(APIView):
         
 
 class ModifyRatingsAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsRater]
     def put(self, request, id):
         try:
             queryset = Ratings.objects.get(id=id)
