@@ -103,6 +103,7 @@ class ModifyRatingsAPIView(APIView):
     def put(self, request, id):
         try:
             queryset = Ratings.objects.get(id=id)
+            self.check_object_permissions(request,queryset)
             serializer = RatingSerializer(queryset, data=request.data, partial=True)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
@@ -126,6 +127,7 @@ class ModifyRatingsAPIView(APIView):
     def delete(self, request, id):
         try:
             queryset = Ratings.objects.get(id=id)
+            self.check_object_permissions(request,queryset)
             queryset.delete()
             return Response({
                 "status" : "success",

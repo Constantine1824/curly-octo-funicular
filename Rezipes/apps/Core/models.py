@@ -34,10 +34,21 @@ class Comments(BaseModelField):
     class Meta:
         verbose_name_plural = 'Comments'
 
+class BookMark(BaseModelField):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    recipes = models.ManyToManyField(Recipes)
 
+    def __str__(self):
+        return self.user.get_username()
+    
 class Ratings(BaseModelField):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipes, on_delete=models.CASCADE, related_name='ratings')
     rating = models.IntegerField()
 
+    def __str__(self):
+        return self.user.get_username() + " " + self.rating
+    
+    class Meta:
+        verbose_name_plural = 'Ratings'
 # Create your models here.
